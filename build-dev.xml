@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--开发时候使用,实现自动拷贝功能-->
+<project name="deploy" default="autocopy" basedir=".">
+	<target name="autocopy">
+		
+		<copy todir="${basedir}/target/lazyrest" preservelastmodified="true">
+			<fileset dir="${basedir}/src/main/webapp">
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/target/lazyrest/WEB-INF/classes" preservelastmodified="true">
+			<fileset dir="${basedir}/target/classes">
+			</fileset>
+		</copy>
+	</target>
+</project>
