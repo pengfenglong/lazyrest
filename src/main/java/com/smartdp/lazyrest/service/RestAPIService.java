@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.smartdp.lazyrest.sqlbuilder.DeleteBuilder;
 import com.smartdp.lazyrest.sqlbuilder.InsertBuilder;
 import com.smartdp.lazyrest.sqlbuilder.SelectBuilder;
+import com.smartdp.lazyrest.sqlbuilder.UpdateBuilder;
 
 @Component("restAPIService")
 public class RestAPIService {
@@ -117,6 +118,39 @@ public class RestAPIService {
 		deleteBuilder.set("id = '"+id+"'");
 		
 		jdbcTemplate.execute(deleteBuilder.toString());
+		
+		return true;
+		
+	}
+	
+	public Object update(String entity,String id,String body){
+		
+		Map<String, Object> map = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			map = objectMapper.readValue(body, Map.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		UpdateBuilder updateBuilder = new UpdateBuilder(entity);
+		
+		Set<String> keys = map.keySet();
+		
+		for(String key : keys){
+			updateBuilder.set(key + " = '"+map.get(key)+"'");
+		}
+		
+		updateBuilder.wheres("id = '"+id+"'");
+		
+		jdbcTemplate.update(updateBuilder.toString());
 		
 		return true;
 		

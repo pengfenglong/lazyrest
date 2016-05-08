@@ -1,10 +1,6 @@
 package com.smartdp.lazyrest.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +16,6 @@ import com.smartdp.lazyrest.service.RestAPIService;
 public class RestAPIController {
 	
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
-	@Autowired
 	private RestAPIService restAPIService;
 
 	/**
@@ -33,7 +26,6 @@ public class RestAPIController {
 	 */
 	@RequestMapping(value="/{entity}/{id}",method=RequestMethod.GET)
 	public @ResponseBody Object get(@PathVariable String entity,@PathVariable String id) {
-		
 		
 		return restAPIService.select(entity, id);
 
@@ -57,7 +49,7 @@ public class RestAPIController {
 		
 		restAPIService.create(entity, body);
 	
-		return "aaaaa";
+		return true;
 		
 	}
 	
@@ -66,7 +58,16 @@ public class RestAPIController {
 		
 		restAPIService.delete(entity, id);
 		
-		return "aaaaa";
+		return true;
+		
+	}
+	
+	@RequestMapping(value="/{entity}/{id}",method=RequestMethod.PUT)
+	public @ResponseBody Object update(@PathVariable String entity,@PathVariable String id,@RequestBody String body) {
+		
+		restAPIService.update(entity, id, body);
+		
+		return true;
 		
 	}
 
