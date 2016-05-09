@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -73,7 +74,7 @@ public class RestAPIService {
 		
 		String sql = selectBuilder.toString();
 		if(limit!=null){
-			sql += " limit " + limit + ",2";
+			sql += " limit " + limit + ",20";
 		}
 		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
 		
@@ -100,13 +101,14 @@ public class RestAPIService {
 		InsertBuilder builder;
 	    builder = new InsertBuilder(entity);
 	    
+	    builder.set("id", "'"+UUID.randomUUID().toString()+"'");
 	    Set<String> keys = map.keySet();
 	    
 	    for(String key : keys){
 	    	builder.set(key, "'"+(String)map.get(key)+"'");
 	    }
 		
-	    jdbcTemplate.execute(builder.toString());
+	    jdbcTemplate.update(builder.toString());
 		return true;
 		
 	}
