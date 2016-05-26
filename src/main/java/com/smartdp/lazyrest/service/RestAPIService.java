@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.smartdp.lazyrest.dao.Pagination;
 import com.smartdp.lazyrest.sqlbuilder.DeleteBuilder;
 import com.smartdp.lazyrest.sqlbuilder.InsertBuilder;
 import com.smartdp.lazyrest.sqlbuilder.SelectBuilder;
@@ -38,7 +39,7 @@ public class RestAPIService {
 		
 	}
 	
-	public List<Map<String, Object>> query(String entity,String filter){
+	public Pagination query(String entity,String filter){
 		Map<String, Object> map = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -56,7 +57,8 @@ public class RestAPIService {
 		SelectBuilder selectBuilder = new SelectBuilder(entity);
 		List<String> fields = (List<String>)map.get("fields");
 		String order = (String)map.get("order");
-		Integer limit = (Integer)map.get("limit");
+		Integer currentPage = (Integer)map.get("currentPage");
+		Integer pageSize = (Integer)map.get("pageSize");
 		List<String> wheres = (List<String>)map.get("where");
 		if(fields!=null){
 			for(String field : fields){
@@ -72,14 +74,18 @@ public class RestAPIService {
 			}
 		}
 		
-		String sql = selectBuilder.toString();
-		if(limit!=null){
-			sql += " limit " + limit + ",20";
-		}
-		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+//		String sql = selectBuilder.toString();
+//		if(limit!=null){
+//			sql += " limit " + limit + ",20";
+//		}
 		
-		return list;
+		Pagination page = new Pagination(selectBuilder.toString(), currentPage, pageSize, jdbcTemplate);
+		
+		//List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+		
+		return page;
 	}
+	
 	
 	public Object create(String entity,String body){
 		

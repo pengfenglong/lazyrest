@@ -2,7 +2,7 @@
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-	<display-name></display-name>
+	<display-name>lazyrest</display-name>
 	
 	
 	<listener>
@@ -24,6 +24,19 @@
 	
 
 	<!-- Filter 定义  -->
+	<!-- Spring Security 权限认证-->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	
+	
 	<!-- Character Encoding filter -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -39,6 +52,16 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 跨域-->
+	<filter>
+		<filter-name>simpleCORSFilter</filter-name>
+		<filter-class>com.smartdp.lazyrest.filter.SimpleCORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>simpleCORSFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
@@ -58,27 +81,4 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
-
-	<!-- session超时定义,单位为分钟 -->
-	<session-config>
-		<session-timeout>200</session-timeout>
-	</session-config>
-
-	<!-- 出错页面定义 -->
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/WEB-INF/page/common/500.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/page/common/500.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/page/common/404.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/page/common/403.jsp</location>
-	</error-page>
 </web-app>
