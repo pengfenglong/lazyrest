@@ -1,4 +1,4 @@
-#FROM daocloud.io/pengfenglong/docker-demo-build-base-image:latest
+FROM daocloud.io/pengfenglong/docker-demo-build-base-image:latest
 
 ADD pom.xml /tmp/build/
 RUN cd /tmp/build && mvn -q dependency:resolve
