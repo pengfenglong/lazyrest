@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smartdp.lazyrest.service.RestAPIService;
 
-/**
 @RestController
 @RequestMapping("/rest/api")
-*/
 public class RestAPIController {
 	
 	@Autowired
