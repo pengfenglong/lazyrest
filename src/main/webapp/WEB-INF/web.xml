@@ -5,6 +5,7 @@
 	<display-name>lazyrest</display-name>
 	
 	
+	<!-- 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -15,7 +16,7 @@
 			classpath:applicationContext.xml
 		</param-value>
 	</context-param>
-	
+	 -->
 
 	<!-- Spring 刷新Introspector防止内存泄露 -->
 	<listener>
@@ -24,7 +25,7 @@
 	
 
 	<!-- Filter 定义  -->
-	<!-- Spring Security 权限认证-->
+	<!-- Spring Security 权限认证
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -35,7 +36,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
-	
+	-->
 	
 	<!-- Character Encoding filter -->
 	<filter>
