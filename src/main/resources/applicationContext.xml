@@ -152,6 +152,7 @@
         <aop:advisor advice-ref="txAdvice"
             pointcut-ref="interceptorPointCuts" />        
     </aop:config> 
-    -->
+    
     <import resource="classpath:applicationContext-security.xml"/>
+    -->
 </beans>
