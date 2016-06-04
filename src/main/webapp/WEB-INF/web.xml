@@ -17,14 +17,14 @@
 	</context-param>
 	
 
-	<!-- Spring 刷新Introspector防止内存泄露
+	<!-- Spring 刷新Introspector防止内存泄露 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	 -->
+	
 
 	<!-- Filter 定义  -->
-	<!-- Spring Security 权限认证
+	<!-- Spring Security 权限认证-->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -35,9 +35,9 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
-	-->
 	
-	<!-- Character Encoding filter
+	
+	<!-- Character Encoding filter -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -54,9 +54,8 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 -->
 	
-	<!-- 跨域
+	<!-- 跨域-->
 	<filter>
 		<filter-name>simpleCORSFilter</filter-name>
 		<filter-class>com.smartdp.lazyrest.filter.SimpleCORSFilter</filter-class>
@@ -65,7 +64,6 @@
 		<filter-name>simpleCORSFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	-->
 	
  	<!-- 配置Spring核心控制器 -->
     <servlet>
