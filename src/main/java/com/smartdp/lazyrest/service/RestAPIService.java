@@ -84,6 +84,78 @@ public class RestAPIService {
 		//List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
 		
 		return page;
+		
+		/**
+		 
+		 if(fields!=null){
+		 	for(String field : fields){
+		 		selectBuilder.column(entity+"."+field);
+		 	}
+		 }else{
+		 	selectBuilder.column(entity+".*");
+		 }
+		 
+		 if(order!=null){
+		 	selectBuilder.orderBy(entity+"."+order);
+		 }
+		 
+		 if(wheres!=null){
+		 	for(String where : wheres){
+		 		selectBuikder.where(entity+"."+where);
+		 	}
+		 	
+		 }
+		 
+		 List<Map> relations = (List<Map>)map.get("relations");
+		 if(relations!null){
+		 	for(Map relation : relations){
+		 		String relationEntity = (String)relation.get("entity");
+		 		String relationFileld = (String)relation.get("relation_field");
+		 		List<String> relationFields = (List<String>)relation.get("fields");
+		 		selectBuilder.form(relationEntity);
+		 		for(String field : fields){
+		 			selectBuilder.column(relationEntity+"."+field+" as "+relationEntity+"__"+field);
+		 		}
+		 		selectBuilder.where(relationEntity+".id="+entity+"."+relationField);
+		 	}
+		 }
+		 
+		 List list = ;
+		 if(relations!=null){
+		 	for(Map relation : relations){
+		 		for(Map<String,Object> l : list){
+		 			List<String> removes = new Arraylist<String>();
+		 			String relationT = null;
+		 			Map res = new HashMap();
+		 			for(String key : l.keySet()){
+		 				if(key.equals(((String)relation.get("relation_field")).toUpperCase())){
+		 					removes.add(key);
+		 				}
+		 				
+		 				if(key.indexOf("__")!=-1){
+		 					String[] ks = key.split("__");
+		 					relationT = ks[0];
+		 					res.put(ks[1],l.get(key));
+		 					removes.add(key);
+		 				}
+		 			}
+		 			
+		 			if(relationT!=null){
+		 				l.put(relationT,res);
+		 				for(String remove : removes){
+		 					l.remove(remove);
+		 				}
+		 			}
+		 			
+		 		}
+		 	}
+		 }
+		 
+		 ** /
+		
+		
+		
+		
 	}
 	
 	
