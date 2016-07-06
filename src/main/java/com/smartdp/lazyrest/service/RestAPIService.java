@@ -1,6 +1,8 @@
 package com.smartdp.lazyrest.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +41,7 @@ public class RestAPIService {
 		
 	}
 	
+	//filter={"currentPage":1,"pageSize":100000,"relations":[{"entity":"groups","relation_field":"group_id","fields":["id","name"]}]}
 	public Pagination query(String entity,String filter){
 		Map<String, Object> map = null;
 		try {
@@ -60,34 +63,8 @@ public class RestAPIService {
 		Integer currentPage = (Integer)map.get("currentPage");
 		Integer pageSize = (Integer)map.get("pageSize");
 		List<String> wheres = (List<String>)map.get("where");
+		
 		if(fields!=null){
-			for(String field : fields){
-				selectBuilder.column(field);
-			}
-		}
-		if(order!=null){
-			selectBuilder.orderBy(order);
-		}
-		if(wheres!=null){
-			for(String where : wheres){
-				selectBuilder.where(where);
-			}
-		}
-		
-//		String sql = selectBuilder.toString();
-//		if(limit!=null){
-//			sql += " limit " + limit + ",20";
-//		}
-		
-		Pagination page = new Pagination(selectBuilder.toString(), currentPage, pageSize, jdbcTemplate);
-		
-		//List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
-		
-		return page;
-		
-		/**
-		 
-		 if(fields!=null){
 		 	for(String field : fields){
 		 		selectBuilder.column(entity+"."+field);
 		 	}
@@ -101,30 +78,40 @@ public class RestAPIService {
 		 
 		 if(wheres!=null){
 		 	for(String where : wheres){
-		 		selectBuikder.where(entity+"."+where);
+		 		selectBuilder.where(entity+"."+where);
 		 	}
 		 	
 		 }
 		 
 		 List<Map> relations = (List<Map>)map.get("relations");
-		 if(relations!null){
+		 if(relations!=null){
 		 	for(Map relation : relations){
 		 		String relationEntity = (String)relation.get("entity");
-		 		String relationFileld = (String)relation.get("relation_field");
+		 		String relationField = (String)relation.get("relation_field");
 		 		List<String> relationFields = (List<String>)relation.get("fields");
-		 		selectBuilder.form(relationEntity);
-		 		for(String field : fields){
+		 		selectBuilder.from(relationEntity);
+		 		for(String field : relationFields){
 		 			selectBuilder.column(relationEntity+"."+field+" as "+relationEntity+"__"+field);
 		 		}
 		 		selectBuilder.where(relationEntity+".id="+entity+"."+relationField);
 		 	}
 		 }
-		 
-		 List list = ;
+		
+		
+//		String sql = selectBuilder.toString();
+//		if(limit!=null){
+//			sql += " limit " + limit + ",20";
+//		}
+		
+		Pagination page = new Pagination(selectBuilder.toString(), currentPage, pageSize, jdbcTemplate);
+		
+		//List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+		
+		 List<Map<String,Object>> list = page.getResult();
 		 if(relations!=null){
 		 	for(Map relation : relations){
 		 		for(Map<String,Object> l : list){
-		 			List<String> removes = new Arraylist<String>();
+		 			List<String> removes = new ArrayList<String>();
 		 			String relationT = null;
 		 			Map res = new HashMap();
 		 			for(String key : l.keySet()){
@@ -151,11 +138,8 @@ public class RestAPIService {
 		 	}
 		 }
 		 
-		 ** /
 		
-		
-		
-		
+		return page;
 	}
 	
 	
