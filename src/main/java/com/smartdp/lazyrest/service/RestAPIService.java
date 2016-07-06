@@ -115,7 +115,7 @@ public class RestAPIService {
 		 			String relationT = null;
 		 			Map res = new HashMap();
 		 			for(String key : l.keySet()){
-		 				if(key.equals(((String)relation.get("relation_field")).toUpperCase())){
+		 				if(key.toUpperCase().equals(((String)relation.get("relation_field")).toUpperCase())){
 		 					removes.add(key);
 		 				}
 		 				
