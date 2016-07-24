@@ -3,11 +3,11 @@
 <project name="deploy" default="autocopy" basedir=".">
 	<target name="autocopy">
 		
-		<copy todir="${basedir}/target/lazyrest" preservelastmodified="true">
+		<copy todir="${basedir}/target/lazyrest-1.0.0" preservelastmodified="true">
 			<fileset dir="${basedir}/src/main/webapp">
 			</fileset>
 		</copy>
-		<copy todir="${basedir}/target/lazyrest/WEB-INF/classes" preservelastmodified="true">
+		<copy todir="${basedir}/target/lazyrest-1.0.0/WEB-INF/classes" preservelastmodified="true">
 			<fileset dir="${basedir}/target/classes">
 			</fileset>
 		</copy>

@@ -1,5 +1,7 @@
 package com.smartdp.lazyrest.controller;
 
+import java.net.URLDecoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +49,7 @@ public class RestAPIController {
 	@RequestMapping(value="/{entity}",method=RequestMethod.POST)
 	public @ResponseBody Object create(@PathVariable String entity,@RequestBody String body) {
 		
-		restAPIService.create(entity, body);
+		restAPIService.create(entity, URLDecoder.decode(body));
 	
 		return true;
 		

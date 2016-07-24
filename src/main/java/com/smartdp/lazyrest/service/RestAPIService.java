@@ -83,6 +83,7 @@ public class RestAPIService {
 		 	
 		 }
 		 
+		 //关联查询
 		 List<Map> relations = (List<Map>)map.get("relations");
 		 if(relations!=null){
 		 	for(Map relation : relations){
@@ -107,6 +108,7 @@ public class RestAPIService {
 		
 		//List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
 		
+		//使用关联对象替换关联id
 		 List<Map<String,Object>> list = page.getResult();
 		 if(relations!=null){
 		 	for(Map relation : relations){
